@@ -171,7 +171,7 @@
     </div>
   </div>
   <div class="nav-right">
-    <a class="nav-cta ml-onclick-form" href="javascript:void(0)" onclick="ml('show', 'oFZS4B', true)">Join the Waitlist</a>
+    <a class="nav-cta ml-onclick-form" href="javascript:void(0)" onclick="showWaitlistForm()">Join the Waitlist</a>
     <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -182,7 +182,7 @@
   <a href="index.html#how-it-works">How It Works</a>
   <a href="index.html#pricing">Pricing</a>
   <a href="index.html#faq">FAQ</a>
-  <a class="ml-onclick-form" href="javascript:void(0)" onclick="ml('show', 'oFZS4B', true)">Join Waitlist</a>
+  <a class="ml-onclick-form" href="javascript:void(0)" onclick="showWaitlistForm()">Join Waitlist</a>
 </div>
 
 <div class="page-header">
@@ -257,7 +257,7 @@
         <p>We may update this Privacy Policy from time to time. When we do, we'll update the date at the top of this page. Continued use of the site after changes are posted constitutes your acceptance of the updated policy.</p>
 
         <h2>Contact</h2>
-        <p>If you have any questions about this Privacy Policy, please reach out at <a href="mailto:info@jointheaac.com">info@jointheaac.com</a>.</p>
+        <p>If you have any questions about this Privacy Policy, please reach out at <a href="/cdn-cgi/l/email-protection#d6bfb8b0b996bcb9bfb8a2beb3b7b7b5f8b5b9bb"><span class="__cf_email__" data-cfemail="01686f676e416b6e686f7569646060622f626e6c">[email&#160;protected]</span></a>.</p>
 
       </div>
     </div>
@@ -286,7 +286,7 @@
   <div class="footer-copy">© 2026 Nate Templeton. All rights reserved.</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
   hamburger.addEventListener('click', () => {
@@ -301,14 +301,7 @@
   }));
 </script>
 
-<!-- MailerLite Universal -->
+<!-- MailerLite Universal — deferred, loads only on button click -->
 <script>
   (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
-  .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
-  n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
-  (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
-  ml('account', '2186512');
-</script>
-<!-- End MailerLite Universal -->
-</body>
-</html>
+  .push(arguments);},l=d.createElement(e),l.async=1,l.sr

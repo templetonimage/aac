@@ -219,7 +219,7 @@
     </div>
   </div>
   <div class="nav-right">
-    <a class="nav-cta ml-onclick-form" href="javascript:void(0)" onclick="ml('show', 'oFZS4B', true)">Join the Waitlist</a>
+    <a class="nav-cta ml-onclick-form" href="javascript:void(0)" onclick="showWaitlistForm()">Join the Waitlist</a>
     <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -230,7 +230,7 @@
   <a href="index.html#how-it-works">How It Works</a>
   <a href="index.html#pricing">Pricing</a>
   <a href="index.html#faq">FAQ</a>
-  <a class="ml-onclick-form" href="javascript:void(0)" onclick="ml('show', 'oFZS4B', true)">Join Waitlist</a>
+  <a class="ml-onclick-form" href="javascript:void(0)" onclick="showWaitlistForm()">Join Waitlist</a>
 </div>
 
 <div class="page-header">
@@ -256,7 +256,7 @@
           <div class="contact-method-icon">✉️</div>
           <div class="contact-method-body">
             <span class="contact-method-label">Email</span>
-            <div class="contact-method-val"><a href="mailto:info@jointheaac.com">info@jointheaac.com</a></div>
+            <div class="contact-method-val"><a href="/cdn-cgi/l/email-protection#0d64636b624d676264637965686c6c6e236e6260"><span class="__cf_email__" data-cfemail="f59c9b939ab59f9a9c9b819d90949496db969a98">[email&#160;protected]</span></a></div>
           </div>
         </div>
 
@@ -272,7 +272,7 @@
           <div class="contact-method-icon">📅</div>
           <div class="contact-method-body">
             <span class="contact-method-label">Trial Opens</span>
-            <div class="contact-method-val">May 2026 · Round 1 starts June 1</div>
+            <div class="contact-method-val">Free Trial June 1 · Round 1 launches July 1, 2026</div>
           </div>
         </div>
       </div>
@@ -329,7 +329,7 @@
   <div class="footer-copy">© 2026 Nate Templeton. All rights reserved.</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
   hamburger.addEventListener('click', () => {
@@ -343,19 +343,40 @@
     hamburger.setAttribute('aria-expanded', false);
   }));
 
-  function handleContact() {
+  async function handleContact() {
+    const name = document.getElementById('nameInput').value.trim();
     const email = document.getElementById('emailInput').value.trim();
+    const subject = document.getElementById('subjectInput').value.trim();
     const message = document.getElementById('messageInput').value.trim();
-    if (!email || !email.includes('@') || !message) {
-      if (!email || !email.includes('@')) document.getElementById('emailInput').style.borderColor = 'rgba(200,80,60,.5)';
-      if (!message) document.getElementById('messageInput').style.borderColor = 'rgba(200,80,60,.5)';
-      return;
+
+    let valid = true;
+    if (!email || !email.includes('@')) { document.getElementById('emailInput').style.borderColor = 'rgba(200,80,60,.5)'; valid = false; }
+    if (!message) { document.getElementById('messageInput').style.borderColor = 'rgba(200,80,60,.5)'; valid = false; }
+    if (!valid) return;
+
+    const btn = document.querySelector('.form-submit');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('https://formspree.io/f/maqlernr', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ name, email, subject, message })
+      });
+      if (res.ok) {
+        document.getElementById('contactForm').style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      } else {
+        btn.textContent = 'Send Message →';
+        btn.disabled = false;
+        alert('Something went wrong. Please email us directly at info@jointheaac.com');
+      }
+    } catch {
+      btn.textContent = 'Send Message →';
+      btn.disabled = false;
+      alert('Something went wrong. Please email us directly at info@jointheaac.com');
     }
-    // In production, replace this with your form backend (Formspree, Netlify Forms, etc.)
-    const mailto = `mailto:info@jointheaac.com?subject=${encodeURIComponent(document.getElementById('subjectInput').value || 'AAC Contact Form')}&body=${encodeURIComponent(document.getElementById('messageInput').value)}`;
-    window.location.href = mailto;
-    document.getElementById('contactForm').style.display = 'none';
-    document.getElementById('formSuccess').style.display = 'block';
   }
 
   document.querySelectorAll('.form-input').forEach(input => {
@@ -363,14 +384,7 @@
   });
 </script>
 
-<!-- MailerLite Universal -->
+<!-- MailerLite Universal — deferred, loads only on button click -->
 <script>
   (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
-  .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
-  n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
-  (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
-  ml('account', '2186512');
-</script>
-<!-- End MailerLite Universal -->
-</body>
-</html>
+  .push(arguments);},l=d.createElement(e),l.async=1,l.sr

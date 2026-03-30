@@ -456,7 +456,7 @@
     </div>
   </div>
   <div class="nav-right">
-    <a class="nav-cta ml-onclick-form" href="javascript:void(0)" onclick="ml('show', 'oFZS4B', true)">Join the Waitlist</a>
+    <a class="nav-cta ml-onclick-form" href="javascript:void(0)" onclick="showWaitlistForm()">Join the Waitlist</a>
     <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -467,7 +467,7 @@
   <a href="#how-it-works">How It Works</a>
   <a href="#pricing">Pricing</a>
   <a href="#faq">FAQ</a>
-  <a class="ml-onclick-form" href="javascript:void(0)" onclick="ml('show', 'oFZS4B', true)">Join Waitlist</a>
+  <a class="ml-onclick-form" href="javascript:void(0)" onclick="showWaitlistForm()">Join Waitlist</a>
 </div>
 
 <!-- HERO -->
@@ -480,7 +480,7 @@
     <div>
       <p class="hero-sub fade-up d2">AAC is a 90-day proof-based challenge that keeps you running, reviewing, and iterating on your paid ads — so every dollar compounds instead of disappearing. Try it free for 30 days in June before Round 1 kicks off July 1.</p>
       <div class="hero-actions fade-up d3">
-        <a class="btn-primary ml-onclick-form" href="javascript:void(0)" onclick="ml('show', 'oFZS4B', true)">Join the Waitlist</a>
+        <a class="btn-primary ml-onclick-form" href="javascript:void(0)" onclick="showWaitlistForm()">Join the Waitlist</a>
         <a href="#how-it-works" class="btn-outline">See How It Works</a>
       </div>
     </div>
@@ -803,7 +803,7 @@
           <li>Prize pool entry</li>
           <li>Monthly live strategy Zooms</li>
         </ul>
-        <a class="btn-full btn-full-outline ml-onclick-form" href="javascript:void(0)" onclick="ml('show', 'oFZS4B', true)">Join Waitlist</a>
+        <a class="btn-full btn-full-outline ml-onclick-form" href="javascript:void(0)" onclick="showWaitlistForm()">Join Waitlist</a>
       </div>
       <div class="pricing-col featured">
         <div class="pricing-badge-top" style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--ink);font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.1em;font-weight:500;padding:4px 14px;border-radius:2px;white-space:nowrap;">Round 1 — Recommended</div>
@@ -858,7 +858,7 @@
         <p>Free trial starts June 1, 2026. Round 1 launches July 1. Get on the list now — waitlist members get first access and pricing before it's announced anywhere else.</p>
       </div>
       <div class="waitlist-form-wrap" style="display:flex; flex-direction:column; gap:16px; justify-content:center;">
-        <a class="form-submit ml-onclick-form" href="javascript:void(0)" onclick="ml('show', 'oFZS4B', true)" style="font-size:.85rem; padding:18px 28px; border-radius:2px; cursor:pointer; text-align:center; text-decoration:none; display:block;">Get Early Access →</a>
+        <a class="form-submit ml-onclick-form" href="javascript:void(0)" onclick="showWaitlistForm()" style="font-size:.85rem; padding:18px 28px; border-radius:2px; cursor:pointer; text-align:center; text-decoration:none; display:block;">Get Early Access →</a>
         <p class="form-note" style="text-align:center;">No spam. One email when spots open.</p>
       </div>
     </div>
@@ -933,13 +933,27 @@
   });
 </script>
 
-<!-- MailerLite Universal -->
+<!-- MailerLite Universal — deferred, loads only on button click -->
 <script>
-  (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
-  .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
-  n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
-  (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
-  ml('account', '2186512');
+  let mlLoaded = false;
+
+  function loadMailerLite(callback) {
+    if (mlLoaded) { callback(); return; }
+    mlLoaded = true;
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2186512');
+    // Small delay to let the script initialize before showing the form
+    setTimeout(callback, 800);
+  }
+
+  function showWaitlistForm() {
+    loadMailerLite(function() {
+      ml('show', 'oFZS4B', true);
+    });
+  }
 </script>
 <!-- End MailerLite Universal -->
 </body>
