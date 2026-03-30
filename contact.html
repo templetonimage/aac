@@ -256,7 +256,7 @@
           <div class="contact-method-icon">✉️</div>
           <div class="contact-method-body">
             <span class="contact-method-label">Email</span>
-            <div class="contact-method-val"><a href="/cdn-cgi/l/email-protection#0d64636b624d676264637965686c6c6e236e6260"><span class="__cf_email__" data-cfemail="f59c9b939ab59f9a9c9b819d90949496db969a98">[email&#160;protected]</span></a></div>
+            <div class="contact-method-val"><a id="contactEmail" href="#"></a></div>
           </div>
         </div>
 
@@ -343,6 +343,11 @@
     hamburger.setAttribute('aria-expanded', false);
   }));
 
+  // Assemble email at runtime to avoid Cloudflare obfuscation
+  const _u = 'info', _d = 'jointheaac.com', _e = _u + '@' + _d;
+  const _el = document.getElementById('contactEmail');
+  if (_el) { _el.href = 'mailto:' + _e; _el.textContent = _e; }
+
   async function handleContact() {
     const name = document.getElementById('nameInput').value.trim();
     const email = document.getElementById('emailInput').value.trim();
@@ -370,7 +375,7 @@
       } else {
         btn.textContent = 'Send Message →';
         btn.disabled = false;
-        alert('Something went wrong. Please email us directly at info@jointheaac.com');
+        alert('Something went wrong. Please email us directly at ' + _e);
       }
     } catch {
       btn.textContent = 'Send Message →';
