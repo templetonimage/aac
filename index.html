@@ -138,9 +138,9 @@
       position: relative; overflow: hidden;
       display: flex; flex-direction: column;
     }    .hero-main {
-      padding: 72px 56px 72px 56px; 
+      padding: 72px 56px 72px 40px; 
       display: flex; flex-direction: column; justify-content: space-between; position: relative;
-      max-width: 900px;
+      max-width: 100%;
     }
     .hero-eyebrow {
       font-family: 'DM Mono', monospace; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
@@ -155,7 +155,7 @@
       line-height: .92; letter-spacing: .01em; color: var(--ink); margin-bottom: 36px;
     }
     .hero h1 em { font-style: normal; color: var(--gold); }
-    .hero-sub { font-size: 1.05rem; font-weight: 300; color: var(--muted); max-width: 480px; line-height: 1.72; margin-bottom: 48px; }
+    .hero-sub { font-size: 1.05rem; font-weight: 300; color: var(--muted); max-width: 720px; line-height: 1.72; margin-bottom: 48px; }
     .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
     .btn-primary {
       background: var(--gold); color: var(--ink);
@@ -964,7 +964,23 @@
         <label style="font-family:'DM Mono',monospace; font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.6); display:block; margin-bottom:8px;">First Name</label>
         <input type="text" name="first_name" required placeholder="Jane" style="display:block; width:100%; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.15); border-radius:2px; color:#fff; font-family:'DM Sans',sans-serif; font-size:.95rem; padding:12px 14px; outline:none; margin-bottom:12px; transition:border-color .2s;" onfocus="this.style.borderColor='#C9A84D'" onblur="this.style.borderColor='rgba(255,255,255,.15)'" />
         <label style="font-family:'DM Mono',monospace; font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.6); display:block; margin-bottom:8px;">Email Address</label>
-        <input type="email" name="email" required placeholder="jane@example.com" style="display:block; width:100%; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.15); border-radius:2px; color:#fff; font-family:'DM Sans',sans-serif; font-size:.95rem; padding:12px 14px; outline:none; margin-bottom:20px; transition:border-color .2s;" onfocus="this.style.borderColor='#C9A84D'" onblur="this.style.borderColor='rgba(255,255,255,.15)'" />
+        <input type="email" name="email" required placeholder="jane@example.com" style="display:block; width:100%; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.15); border-radius:2px; color:#fff; font-family:'DM Sans',sans-serif; font-size:.95rem; padding:12px 14px; outline:none; margin-bottom:12px; transition:border-color .2s;" onfocus="this.style.borderColor='#C9A84D'" onblur="this.style.borderColor='rgba(255,255,255,.15)'" />
+        <label style="font-family:'DM Mono',monospace; font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.6); display:block; margin-bottom:8px;">Ad Platform</label>
+        <select name="ad_platform" id="adPlatformSelect" required onchange="toggleOtherField(this)" style="display:block; width:100%; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.15); border-radius:2px; color:#fff; font-family:'DM Sans',sans-serif; font-size:.95rem; padding:12px 14px; outline:none; margin-bottom:12px; transition:border-color .2s; appearance:none; -webkit-appearance:none; cursor:pointer;" onfocus="this.style.borderColor='#C9A84D'" onblur="this.style.borderColor='rgba(255,255,255,.15)'">
+          <option value="" disabled selected style="background:#1a1a1a; color:rgba(255,255,255,.4);">Select a platform…</option>
+          <option value="Meta" style="background:#1a1a1a;">Meta (Facebook / Instagram)</option>
+          <option value="TikTok" style="background:#1a1a1a;">TikTok</option>
+          <option value="Google" style="background:#1a1a1a;">Google</option>
+          <option value="LinkedIn" style="background:#1a1a1a;">LinkedIn</option>
+          <option value="Other" style="background:#1a1a1a;">Other</option>
+        </select>
+        <div id="otherPlatformWrap" style="display:none; margin-bottom:12px;">
+          <input type="text" name="ad_platform_other" id="adPlatformOther" placeholder="Which platform?" style="display:block; width:100%; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.15); border-radius:2px; color:#fff; font-family:'DM Sans',sans-serif; font-size:.95rem; padding:12px 14px; outline:none; transition:border-color .2s;" onfocus="this.style.borderColor='#C9A84D'" onblur="this.style.borderColor='rgba(255,255,255,.15)'" />
+        </div>
+        <label id="commitCheckLabel" style="display:flex; align-items:flex-start; gap:12px; background:rgba(201,168,77,.08); border:1px solid rgba(201,168,77,.22); border-radius:2px; padding:14px; margin-bottom:20px; cursor:pointer;">
+          <input type="checkbox" name="commitment" id="commitCheck" required style="margin-top:2px; flex-shrink:0; accent-color:#C9A84D; width:16px; height:16px; cursor:pointer;" />
+          <span style="font-size:.82rem; color:rgba(255,255,255,.75); line-height:1.55;">I understand that as a member of AAC, I must run a continuous active ad campaign for the duration of the challenge. Failing to do so will result in restricted platform access until I recommit to the challenge.</span>
+        </label>
         <button type="submit" id="modalSubmitBtn" style="display:block; width:100%; background:#C9A84D; color:#111010; font-family:'DM Mono',monospace; font-weight:500; font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; padding:15px; border:none; border-radius:2px; cursor:pointer; transition:background .2s;">Get Early Access →</button>
       </form>
     </div>
@@ -977,6 +993,19 @@
 </div>
 
 <script>
+  function toggleOtherField(sel) {
+    const wrap = document.getElementById('otherPlatformWrap');
+    const input = document.getElementById('adPlatformOther');
+    if (sel.value === 'Other') {
+      wrap.style.display = 'block';
+      input.required = true;
+    } else {
+      wrap.style.display = 'none';
+      input.required = false;
+      input.value = '';
+    }
+  }
+
   function openWaitlistModal() {
     const modal = document.getElementById('waitlistModal');
     modal.style.display = 'flex';
