@@ -964,6 +964,7 @@
           <label for="join-email" style="font-family:'DM Mono',monospace; font-size:.65rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.5);">Email</label>
           <input id="join-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" style="background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.18); border-radius:2px; padding:12px 14px; font-family:'DM Sans',sans-serif; font-size:.95rem; color:#fff; outline:none; transition:border-color .2s;" onfocus="this.style.borderColor='#C9A84D'" onblur="this.style.borderColor='rgba(255,255,255,.18)'" />
         </div>
+        <input id="join-hp" name="hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" />
         <p id="join-error" role="alert" style="display:none; font-family:'DM Mono',monospace; font-size:.68rem; color:#f87171; letter-spacing:.04em;"></p>
         <button id="join-submit" type="submit" style="margin-top:6px; background:#C9A84D; color:#111010; font-family:'DM Mono',monospace; font-size:.8rem; letter-spacing:.1em; text-transform:uppercase; font-weight:500; border:none; border-radius:2px; padding:16px 24px; cursor:pointer; transition:opacity .2s;">Start Free Trial</button>
       </form>
@@ -1023,6 +1024,9 @@
     obs.observe(el);
   });
   // Join Modal
+  // Cloud Function URL — paste in after deploying createTrialAccount (Firebase CLI prints it).
+  const TRIAL_ACCOUNT_FN_URL = "https://us-central1-aac-26.cloudfunctions.net/createTrialAccount";
+
   function openJoinModal() {
     const overlay = document.getElementById('join-overlay');
     overlay.style.display = 'flex';
@@ -1058,10 +1062,12 @@
     e.preventDefault();
     const name = document.getElementById('join-name').value.trim();
     const email = document.getElementById('join-email').value.trim();
+    const hp = document.getElementById('join-hp').value.trim();
     const errorEl = document.getElementById('join-error');
     const submitBtn = document.getElementById('join-submit');
 
     errorEl.style.display = 'none';
+    errorEl.innerHTML = '';
 
     if (!name) { errorEl.textContent = 'Please enter your first name.'; errorEl.style.display = 'block'; return; }
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errorEl.textContent = 'Please enter a valid email address.'; errorEl.style.display = 'block'; return; }
@@ -1069,23 +1075,39 @@
     submitBtn.disabled = true;
     submitBtn.textContent = 'Submitting...';
 
-    try {
-      const res = await fetch('https://formspree.io/f/xqenereq', {
+    // Fire both in parallel: Formspree (notification email, unchanged) and
+    // the Cloud Function (account creation + MailerLite). Neither blocks the
+    // other; only an EMAIL_EXISTS result changes what the user sees.
+    const [formspreeResult, accountResult] = await Promise.allSettled([
+      fetch('https://formspree.io/f/xqenereq', {
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email })
-      });
-      if (res.ok) {
-        document.getElementById('join-form-wrap').style.display = 'none';
-        document.getElementById('join-success').style.display = 'block';
-      } else {
-        errorEl.textContent = 'Something went wrong. Please try again.';
-        errorEl.style.display = 'block';
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Start Free Trial';
-      }
-    } catch {
-      errorEl.textContent = 'Network error. Please check your connection and try again.';
+      }),
+      fetch(TRIAL_ACCOUNT_FN_URL, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, hp })
+      }).then(async r => ({ ok: r.ok, status: r.status, body: await r.json().catch(() => ({})) }))
+    ]);
+
+    const accountData = accountResult.status === 'fulfilled' ? accountResult.value : null;
+
+    if (accountData && accountData.status === 409 && accountData.body && accountData.body.error === 'EMAIL_EXISTS') {
+      errorEl.innerHTML = 'You already have an account with this email. <a href="https://app.jointheaac.com" style="color:#C9A84D;">Log in here</a>.';
+      errorEl.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Start Free Trial';
+      return;
+    }
+
+    const formspreeOk = formspreeResult.status === 'fulfilled' && formspreeResult.value.ok;
+
+    if (formspreeOk) {
+      document.getElementById('join-form-wrap').style.display = 'none';
+      document.getElementById('join-success').style.display = 'block';
+    } else {
+      errorEl.textContent = 'Something went wrong. Please try again.';
       errorEl.style.display = 'block';
       submitBtn.disabled = false;
       submitBtn.textContent = 'Start Free Trial';
