@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AAC — Ad Accountability Challenge</title>
-  <meta name="description" content="Proof-based paid ads accountability. AAC keeps you running, reviewing, and refining your paid ads every week so your spend actually compounds. Waitlist open now." />
+  <meta name="description" content="Proof-based paid ads accountability. AAC keeps you running, reviewing, and refining your paid ads every week so your spend actually compounds. Enrollment open now." />
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
@@ -242,13 +242,29 @@
     .pricing-card.featured { border-color: var(--accent); background: linear-gradient(160deg, rgba(107,142,90,.08) 0%, var(--cream-white) 60%); }
     .pricing-badge-top { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--accent); color: var(--black); font-family: 'Space Mono', monospace; font-size: .68rem; letter-spacing: .1em; font-weight: 500; padding: 4px 14px; border-radius: 8px; white-space: nowrap; }
     .price-round { font-family: 'Space Mono', monospace; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 12px; }
+    .price-dates { font-family: 'Space Mono', monospace; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-dim); margin-top: 10px; margin-bottom: 4px; }
     .price-amt { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 3.8rem; color: var(--ink); line-height: 1; margin-bottom: 4px; }
     .price-amt sup { font-size: 1.6rem; vertical-align: top; margin-top: 10px; margin-right: 2px; }
     .price-note { font-size: .82rem; color: var(--ink-muted); margin-bottom: 28px; }
     .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
     .price-features li { font-size: .9rem; color: var(--ink); display: flex; align-items: flex-start; gap: 10px; }
     .price-features li::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
-    .price-waitlist-note { display: inline-block; margin-top: 8px; margin-bottom: 16px; padding: 3px 10px; border: 1px solid var(--accent); color: var(--accent-dim); font-family: 'Space Mono', monospace; font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; }
+    .pricing-card.bundle { border-color: var(--accent); background: linear-gradient(160deg, rgba(107,142,90,.12) 0%, var(--cream-white) 65%); }
+    .bundle-intro { font-size: .88rem; color: var(--ink-muted); line-height: 1.6; margin-bottom: 24px; }
+    .bundle-intro a { color: var(--accent-dim); text-decoration: underline; }
+    .bundle-options { display: flex; flex-direction: column; gap: 16px; margin-bottom: 20px; }
+    .bundle-option { border: 1px solid var(--light-border); border-radius: 12px; padding: 22px 22px 20px; background: rgba(253,251,246,.7); }
+    .bundle-option-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+    .bundle-option-label { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--ink); margin-bottom: 4px; }
+    .bundle-option-sub { font-family: 'Space Mono', monospace; font-size: .68rem; color: var(--ink-muted); letter-spacing: .03em; }
+    .bundle-option-price { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 2.1rem; color: var(--ink); line-height: 1; white-space: nowrap; }
+    .bundle-option-price sup { font-size: .95rem; vertical-align: top; margin-top: 5px; margin-right: 1px; }
+    .bundle-option-btn { display: block; width: 100%; text-align: center; font-family: 'Inter', sans-serif; font-weight: 600; font-size: .92rem; letter-spacing: .03em; color: var(--white); background: var(--black); border: 1px solid var(--black); border-radius: 10px; padding: 12px 14px; text-decoration: none; transition: background .2s, color .2s, border-color .2s; }
+    .bundle-option-btn:hover { background: var(--accent); color: var(--black); border-color: var(--accent); }
+    .bundle-features { list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 20px 0 4px; }
+    .bundle-features li { font-size: .84rem; color: var(--ink); display: flex; align-items: flex-start; gap: 10px; }
+    .bundle-features li::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+    .bundle-fine-print { text-align: center; font-family: 'Space Mono', monospace; font-size: .72rem; color: var(--ink-muted); margin-top: 16px; letter-spacing: .04em; }
 
     /* FAQ */
     .faq-list { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 2px; }
@@ -317,18 +333,6 @@
     .aac-col { background: var(--black) !important; color: var(--white); }
     .aac-col .aac-note { color: var(--text) !important; }
 
-    /* WAITLIST MODAL */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(13,13,13,.6); align-items: center; justify-content: center; z-index: 200; padding: 20px; }
-    .modal-overlay.open { display: flex; }
-    .modal-box { background: var(--cream-white); border-radius: 16px; padding: 36px 32px; max-width: 400px; width: 100%; position: relative; text-align: left; box-shadow: 0 24px 60px rgba(0,0,0,.3); }
-    .modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; cursor: pointer; color: var(--ink-muted); font-size: 1.3rem; line-height: 1; }
-    .modal-box h3 { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.4rem; color: var(--ink); margin-bottom: 8px; }
-    .modal-box p { font-size: .9rem; color: var(--ink-muted); margin-bottom: 22px; line-height: 1.6; }
-    .modal-box input { width: 100%; padding: 12px 14px; border: 1px solid var(--light-border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: .9rem; margin-bottom: 12px; background: var(--cream); }
-    .modal-box input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
-    .modal-submit { width: 100%; background: var(--black); color: var(--white); border: none; border-radius: 8px; padding: 13px; font-weight: 600; font-size: .92rem; cursor: pointer; transition: background .2s, color .2s; }
-    .modal-submit:hover { background: var(--accent); color: var(--black); }
-    .modal-note { font-family: 'Space Mono', monospace; font-size: .68rem; color: var(--ink-muted); margin-top: 12px; text-align: center; }
   </style>
 </head>
 <body>
@@ -344,7 +348,7 @@
   </div>
   <div style="display:flex; align-items:center; gap:12px;">
     <a href="https://app.jointheaac.com" class="nav-login" target="_blank" rel="noopener">Member Login</a>
-    <a href="#" class="nav-cta" onclick="openWaitlist();return false;">Join the Waitlist</a>
+    <a href="https://buy.stripe.com/5kQ14n71F6R185MfFvbo40b" class="nav-cta" target="_blank" rel="noopener">Buy AAC Membership</a>
     <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -362,15 +366,15 @@
 
 <!-- HERO -->
 <section class="hero">
-  <p class="hero-kicker fade-up"><span class="live-dot"></span> Rolling enrollment reopens August 1</p>
+  <p class="hero-kicker fade-up"><span class="live-dot"></span> Enrollment open now &middot; August 2026</p>
   <h1 class="fade-up delay-1">Your Ad Budget<br>Isn't the Problem.<br><em>Inconsistency Is.</em></h1>
   <p class="hero-sub fade-up delay-2">AAC is a proof-based <strong>Ad Accountability Challenge</strong> that keeps you running, reviewing, and iterating on your paid ads every single week, so every dollar compounds instead of disappearing. 7-day free trial, then $27/mo.</p>
   <div class="hero-note-box fade-up delay-2"><strong>The core commitment:</strong> keep at least one active, spending ad campaign running every week, even if it's $1/day. Miss two consecutive weekly deadlines and access is paused until you upload proof.</div>
   <div class="hero-actions fade-up delay-3">
-    <a href="#" class="btn-primary" onclick="openWaitlist();return false;">Join the Waitlist</a>
+    <a href="https://buy.stripe.com/5kQ14n71F6R185MfFvbo40b" class="btn-primary" target="_blank" rel="noopener">Buy AAC Membership</a>
     <a href="#how-it-works" class="btn-ghost">See How It Works</a>
   </div>
-  <p class="hero-note fade-up delay-4">Enrollment reopens August 1, 2026 &nbsp;·&nbsp; 7-day free trial, then $27/mo</p>
+  <p class="hero-note fade-up delay-4">Enrollment open now &nbsp;·&nbsp; 7-day free trial, then $27/mo</p>
   <div class="hero-ui fade-up delay-4">
     <div class="ui-panel">
       <div class="ui-panel-header">
@@ -575,7 +579,7 @@
       <span class="tag">The reward</span>
       <h2>Earn AAC All-Star Status</h2>
       <p>AAC All-Star goes to members who hit every single weekly submission deadline within a calendar month, four submissions, all of them. No exceptions, no partial credit. Earn ad credit giveaways and a 1-on-1 campaign review with Nate.</p>
-      <a href="#" class="btn-primary" onclick="openWaitlist();return false;">Join the Waitlist</a>
+      <a href="https://buy.stripe.com/5kQ14n71F6R185MfFvbo40b" class="btn-primary" target="_blank" rel="noopener">Buy AAC Membership</a>
       <div class="allstar-meta">
         <span>Zero misses required</span>
         <span>Meta or Google ad credit</span>
@@ -682,7 +686,7 @@
     <div class="section-header">
       <span class="tag">How Much Is It?</span>
       <h2>Start Free. Stay Consistent.</h2>
-      <p>Rolling enrollment reopens August 1, 2026. Join the waitlist for first access.</p>
+      <p>Enrollment is open now for August 2026.</p>
     </div>
     <div class="pricing-grid">
       <div class="pricing-card featured">
@@ -690,27 +694,101 @@
         <div class="price-round">7-day free trial, then monthly</div>
         <div class="price-amt"><sup>$</sup>27</div>
         <div class="price-note">Per month after trial &nbsp;·&nbsp; Cancel anytime</div>
-        <div class="price-waitlist-note">Waitlist open now</div>
         <ul class="price-features">
           <li>7-day free trial</li>
+          <li>Get Started Guide, step-by-step to your first live campaign</li>
           <li>Weekly proof submission tracking</li>
           <li>AAC community access + peer ad reviews</li>
           <li>Ad Readiness Audit + Buildout Checklist</li>
           <li>Ad Fundamentals Playbook, 7 parts</li>
           <li>Live coworking sessions</li>
           <li>Leaderboard + points system</li>
-          <li>Monthly live strategy Zooms + guest speakers</li>
+          <li>Frequent live strategy &amp; coworking Zooms to ask for help</li>
           <li>AAC All-Star eligibility</li>
           <li>Access paused if you miss 2 consecutive weeks</li>
         </ul>
-        <a href="#" class="btn-primary" style="width:100%; text-align:center; display:block;" onclick="openWaitlist();return false;">Join the Waitlist</a>
-        <p style="text-align:center; font-family:'Space Mono',monospace; font-size:.72rem; color:var(--ink-muted); margin-top:10px; letter-spacing:.04em;">Waitlist members get first access before enrollment reopens.</p>
+        <a href="https://buy.stripe.com/5kQ14n71F6R185MfFvbo40b" class="btn-primary" style="width:100%; text-align:center; display:block;" target="_blank" rel="noopener">Buy AAC Membership &ndash; August 2026</a>
+        <p style="text-align:center; font-family:'Space Mono',monospace; font-size:.72rem; color:var(--ink-muted); margin-top:10px; letter-spacing:.04em;">7-day free trial starts immediately after checkout.</p>
+      </div>
+      <div class="pricing-card bundle">
+        <div class="pricing-badge-top">BEST VALUE &middot; SAVE $19</div>
+        <div class="price-dates">Aug &ndash; Oct 2026</div>
+        <div class="price-round">One-time payment</div>
+        <div class="bundle-intro">Run consistent ads and launch a converting website side by side. Bundle 3 months of AAC with a round of the <a href="https://joinwac.com" target="_blank" rel="noopener">Website Accountability Challenge</a>, and <em>save $19</em> over buying both separately.</div>
+        <div class="bundle-options">
+          <div class="bundle-option">
+            <div class="bundle-option-top">
+              <div>
+                <div class="bundle-option-label">WAC Pro + AAC</div>
+                <div class="bundle-option-sub">3mo AAC &middot; WAC Pro round</div>
+              </div>
+              <div class="bundle-option-price"><sup>$</sup>137</div>
+            </div>
+            <a href="https://buy.stripe.com/14AfZhbhV1wH4TA9h7bo40h" target="_blank" rel="noopener" class="bundle-option-btn">Choose Pro</a>
+          </div>
+          <div class="bundle-option">
+            <div class="bundle-option-top">
+              <div>
+                <div class="bundle-option-label">WAC Base + AAC</div>
+                <div class="bundle-option-sub">3mo AAC &middot; WAC Base round</div>
+              </div>
+              <div class="bundle-option-price"><sup>$</sup>117</div>
+            </div>
+            <a href="https://buy.stripe.com/4gM9AT3Pt5MXdq6ctjbo40g" target="_blank" rel="noopener" class="bundle-option-btn">Choose Base</a>
+          </div>
+        </div>
+        <ul class="bundle-features">
+          <li>3 months AAC membership</li>
+          <li>1 full WAC round, Base or Pro</li>
+          <li>Ad + website accountability, one bundle</li>
+        </ul>
+        <p class="bundle-fine-print">One-time payment &middot; Available now, no trial or waitlist</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FAQ -->
+<!-- WHY BUNDLE -->
+<section class="section" style="padding-top: 64px; padding-bottom: 72px; background: var(--cream-white);">
+  <div class="container">
+    <div class="section-header">
+      <span class="tag">Ads + Website</span>
+      <h2>Why Should I Bundle AAC &amp; WAC?</h2>
+      <p>Ad spend and website quality aren't separate problems, they're the same problem viewed from two ends of the funnel.</p>
+    </div>
+    <div class="plan-steps">
+      <div class="plan-step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h3>Ads Send Traffic to a Landing Page</h3>
+          <p>Every dollar of ad spend depends on what happens after the click. A consistent ad campaign pointed at a stale or unclear website leaks conversions no amount of extra budget will fix.</p>
+        </div>
+      </div>
+      <div class="plan-step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h3>Tracking Only Works End to End</h3>
+          <p>Pixel and conversion tracking need a website that's actually built to receive and report on that traffic. WAC keeps your site's tracking, forms, and CTAs current while AAC keeps the traffic flowing.</p>
+        </div>
+      </div>
+      <div class="plan-step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h3>Same Proof-Based Model, Same Discipline</h3>
+          <p>Both challenges run on weekly proof submissions and peer accountability. Bundling means one consistent habit loop covering both sides of your funnel instead of two disconnected efforts.</p>
+        </div>
+      </div>
+      <div class="plan-step">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h3>Compounding, Not Competing</h3>
+          <p>A better landing page increases what every ad dollar is worth. More consistent ad traffic gives your website more data to convert on. Run both at once and each one makes the other more effective.</p>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center; margin-top:32px; font-size:.92rem; color:var(--ink-muted);">Learn more about the <a href="https://joinwac.com" target="_blank" rel="noopener" style="color:var(--accent-dim); text-decoration:underline;">Website Accountability Challenge</a>.</p>
+  </div>
+</section>
 <section class="section section-dark" id="faq">
   <div class="container">
     <div class="section-header">
@@ -744,7 +822,7 @@
       </div>
       <div class="faq-item">
         <div class="faq-q">When does enrollment reopen?</div>
-        <div class="faq-a">Rolling enrollment reopens August 1, 2026. The waitlist is open now, and waitlist members get first access before it opens to the public.</div>
+        <div class="faq-a">Enrollment is open now for August 2026. You can join today, no waitlist required.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">Is this connected to SMAC and WAC?</div>
@@ -757,9 +835,9 @@
 <!-- FINAL CTA -->
 <section class="final-cta">
   <h2>Stop Letting Your<br>Campaigns Go Dark.</h2>
-  <p>Rolling enrollment reopens August 1, 2026 at $27/mo after a 7-day free trial. Join the waitlist for first access.</p>
-  <a href="#" class="btn-primary" style="position:relative; z-index:1;" onclick="openWaitlist();return false;">Join the Waitlist</a>
-  <p class="final-note">Enrollment reopens August 1, 2026 &nbsp;·&nbsp; Waitlist members get first access</p>
+  <p>Enrollment is open now at $27/mo after a 7-day free trial.</p>
+  <a href="https://buy.stripe.com/5kQ14n71F6R185MfFvbo40b" class="btn-primary" style="position:relative; z-index:1;" target="_blank" rel="noopener">Buy AAC Membership &ndash; August 2026</a>
+  <p class="final-note">Enrollment open now &nbsp;·&nbsp; 7-day free trial, then $27/mo</p>
 </section>
 
 <!-- FOOTER -->
@@ -842,36 +920,6 @@
     observer.observe(el);
   });
 
-  // Waitlist modal
-  function openWaitlist() { document.getElementById('waitlistModal').classList.add('open'); }
-  function closeWaitlist() { document.getElementById('waitlistModal').classList.remove('open'); }
-  async function submitWaitlist(e) {
-    e.preventDefault();
-    const form = e.target;
-    const data = new FormData(form);
-    try {
-      await fetch('https://formspree.io/f/maqlernr', {
-        method: 'POST', body: data, headers: { 'Accept': 'application/json' }
-      });
-      form.innerHTML = '<p style="color:var(--accent-dim);font-weight:600;">You\'re on the list, see you August 1.</p>';
-    } catch (err) {
-      form.innerHTML = '<p style="color:#b3261e;">Something went wrong. Try again or email info@jointheaac.com.</p>';
-    }
-  }
 </script>
-
-<!-- WAITLIST MODAL -->
-<div class="modal-overlay" id="waitlistModal">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeWaitlist()" aria-label="Close">&times;</button>
-    <h3>Join the waitlist</h3>
-    <p>Rolling enrollment reopens August 1, 2026, 7-day free trial then $27/mo. Waitlist members get first access before it opens to the public.</p>
-    <form id="waitlistForm" onsubmit="submitWaitlist(event)">
-      <input type="email" name="email" placeholder="you@yourbusiness.com" required />
-      <button type="submit" class="modal-submit">Join Waitlist</button>
-    </form>
-    <p class="modal-note">No spam. One email when enrollment reopens.</p>
-  </div>
-</div>
 </body>
 </html>
