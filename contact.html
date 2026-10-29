@@ -303,6 +303,11 @@
             <label class="form-label" for="messageInput">Message</label>
             <textarea class="form-input" id="messageInput" placeholder="Your message..."></textarea>
           </div>
+          <!-- Spam trap: hidden from people, bots fill it in -->
+          <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+            <label for="website">Leave this empty</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+          </div>
           <button class="form-submit" onclick="handleContact()">Send Message →</button>
           <p class="form-note">We'll reply to the email address you provide.</p>
         </div>
@@ -356,6 +361,9 @@
   const _el = document.getElementById('contactEmail');
   if (_el) { _el.href = 'mailto:' + _e; _el.textContent = _e; }
 
+  const PAGE_LOADED_AT = Date.now();
+  let sentOnce = false;
+
   async function handleContact() {
     const name = document.getElementById('nameInput').value.trim();
     const email = document.getElementById('emailInput').value.trim();
@@ -366,6 +374,13 @@
     if (!email || !email.includes('@')) { document.getElementById('emailInput').style.borderColor = 'rgba(200,80,60,.5)'; valid = false; }
     if (!message) { document.getElementById('messageInput').style.borderColor = 'rgba(200,80,60,.5)'; valid = false; }
     if (!valid) return;
+
+    // Spam guard: bots fill the hidden field or submit within seconds; pretend success, send nothing.
+    const showThanks = () => {
+      document.getElementById('contactForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    };
+    if (document.getElementById('website').value.trim() || Date.now() - PAGE_LOADED_AT < 5000 || sentOnce) { showThanks(); return; }
 
     const btn = document.querySelector('.form-submit');
     btn.textContent = 'Sending...';
@@ -378,6 +393,7 @@
         body: JSON.stringify({ name, email, subject, message })
       });
       if (res.ok) {
+        sentOnce = true;
         document.getElementById('contactForm').style.display = 'none';
         document.getElementById('formSuccess').style.display = 'block';
       } else {
